@@ -76,23 +76,22 @@
         "description": "Admin password on all VMs."
       }
     },
-    "baseURL": {
+    "templateURL": {
 			"type": "string",
 			"metadata": {
-				"description": "The Base URL for the script and website"
+				"description": "The url where the powershell script is located"
 			},
 			"defaultValue": "https://raw.githubusercontent.com/jrudley/vmssLBNatIIS/master/vmssLBNatIIS/Scripts/"
 		},
 		"customScriptFile": {
 			"type": "string",
 			"metadata": {
-				"description": "The name of the custom script file in the baseURL location"
+				"description": "Powershell script name"
 			},
 			"defaultValue": "deploy.ps1"
 		}
   },
   "variables": {
-    "iisConfigurationScriptLocation": "[concat(parameters('baseURL'),parameters('customScriptFile'))]",
     "apiVersion": "2015-06-15",
     "location": "[resourceGroup().location]",
     "storageAccountType": "Standard_LRS",
@@ -134,6 +133,7 @@
       "sku": "[parameters('windowsOSVersion')]",
       "version": "latest"
     },
+    "fullPathToPSScript": "[concat(parameters('templateURL'),parameters('customScriptFile'))]",
     "diagnosticsStorageAccountName": "[concat('a', parameters('newStorageAccountSuffix'))]",
     "diagnosticsStorageAccountResourceGroup": "[resourceGroup().name]",
     "accountid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',variables('diagnosticsStorageAccountResourceGroup'),'/providers/','Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]",
@@ -322,10 +322,10 @@
             "osDisk": {
               "vhdContainers": [
                 "[concat('https://a', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
-	  	"[concat('https://g', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
-	  	"[concat('https://m', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
-	  	"[concat('https://s', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
-	  	"[concat('https://y', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]"
+	  	          "[concat('https://g', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
+	            	"[concat('https://m', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
+	  	          "[concat('https://s', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]",
+	            	"[concat('https://y', parameters('newStorageAccountSuffix'), '.blob.core.windows.net/vmss')]"
               ],
               "name": "[variables('osDiskName')]",
               "caching": "ReadOnly",
@@ -397,9 +397,9 @@
 									"autoUpgradeMinorVersion": false,
 									"settings": {
 										"fileUris": [
-											"[variables('iisConfigurationScriptLocation')]"
+											"[variables('fullPathToPSScript')]"
 										],
-										"commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ',parameters('customScriptFile'),' -FileLocation ',parameters('baseUrl'))]"
+										"commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ',parameters('customScriptFile'),' -FileLocation ',parameters('templateUrl'))]"
 									}
 								}
 							}
@@ -464,7 +464,7 @@
 									"direction": "Decrease",
 									"type": "ChangeCount",
 									"value": "1",
-									"cooldown": "PT2M"
+									"cooldown": "PT5M"
 								}
 							}
 						]
