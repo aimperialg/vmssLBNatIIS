@@ -15,13 +15,17 @@ Param(
 )
 
 Import-Module Azure -ErrorAction SilentlyContinue
-Login-AzureRmAccount
-try {
 
-} catch { }
+try
+{
+	$AzureRMContext = Get-AzureRMContext
+} 
+catch 
+{
+	Login-AzureRMAccount
+}
 
 Set-StrictMode -Version 3
-#Login-AzureRmAccount
 $OptionalParameters = New-Object -TypeName Hashtable
 $TemplateFile = [System.IO.Path]::Combine($PSScriptRoot, $TemplateFile)
 $TemplateParametersFile = [System.IO.Path]::Combine($PSScriptRoot, $TemplateParametersFile)

@@ -35,6 +35,7 @@
     <Content Include="Scripts\Deploy-AzureResourceGroupOld.ps1" />
     <Content Include="Templates\DeploymentTemplate.json" />
     <None Include="Scripts\Deploy-AzureResourceGroup.ps1" />
+    <None Include="Scripts\deploy.ps1" />
     <None Include="Templates\DeploymentTemplate.param.dev.json" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@
             "value": "East US 2"
         },
         "vmSize": {
-            "value": "Standard_D1"
+            "value": "Standard_D2"
         },
         "newStorageAccountSuffix": {
             "value": "raxstorage"

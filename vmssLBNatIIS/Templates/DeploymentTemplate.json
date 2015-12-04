@@ -81,7 +81,7 @@
 			"metadata": {
 				"description": "The Base URL for the script and website"
 			},
-			"defaultValue": "https://raw.githubusercontent.com/jrudley/vmssNatPoolLBWeb/master/AzureResourceGroup1/"
+			"defaultValue": "https://raw.githubusercontent.com/jrudley/vmssLBNatIIS/master/vmssLBNatIIS/Scripts/"
 		},
 		"customScriptFile": {
 			"type": "string",
